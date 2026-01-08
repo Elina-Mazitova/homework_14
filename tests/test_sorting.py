@@ -1,12 +1,12 @@
 from selene import browser, be
 from selenium.webdriver.support.ui import Select
 
+from pages.base_page import BasePage
+
+
 class TestSorting:
     def test_sort_by_price_high_to_low(self):
-        # открываем категорию "Phones & PDAs"
-        browser.open_url(
-            "https://ecommerce-playground.lambdatest.io/index.php?route=product/category&path=33"
-        )
+        BasePage().open("/index.php?route=product/category&path=33")
 
         sort_dropdown = browser.element('select[id^="input-sort"]').should(be.visible)
 

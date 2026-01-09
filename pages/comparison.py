@@ -14,8 +14,9 @@ class ComparisonPage(BasePage):
     def add_first_product_to_comparison(self):
         first_product = browser.all('.product-layout')[0]
         compare_button = first_product.element('.btn-compare').should(be.visible)
-        browser.driver().execute_script(
-            "arguments[0].click();", compare_button.get_actual_webelement()
+        # JS‑клик по кнопке сравнения
+        browser.driver.execute_script(
+            "arguments[0].click();", compare_button.locate()
         )
         return self
 

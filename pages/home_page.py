@@ -18,11 +18,12 @@ class HomePage(BasePage):
     def should_see_result(self, text: str):
         products = browser.all('.product-thumb')
         products.should(have.size_at_least(1))
-        products.first().should(have.text(text))
+        products.first.should(have.text(text))
 
     @allure.step("Открыть меню Shop by Category")
     def open_shop_by_category(self):
-        browser.element(by.text("Shop by Category")).should(be.clickable).click()
+        button = browser.element('//a[@aria-label="Shop by Category"]').locate()
+        browser.driver.execute_script("arguments[0].click();", button)
         return self
 
     @allure.step("Выбрать категорию {category} в Shop by Category")

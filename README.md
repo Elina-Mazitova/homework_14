@@ -171,13 +171,14 @@ export  SELENOID_URL='selenoid.autotests.cloud'`
     "enableChart": true
   },
   "telegram": {
-    "token": "7967566351:AAF_APQuWWTQWleO6ZFZxOeuJDr6D434VnU",
-    "chat": "-1002900061620",
+    "token": "your_token",
+    "chat": "your_chat",
     "replyTo": ""
    }
 }`
 
-  ![Step1](images/04.jpg)
+  ![Step1](images/19.png)
+  ![Step1](images/20.png)
 
   Шаг 5
   `python -m venv .venv

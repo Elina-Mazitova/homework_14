@@ -1,0 +1,264 @@
+# 🧪 UI Test Automation Project
+
+Автоматизация **UI-автотестов** для сайта **Ecommerce Playground**.  
+![Step1](images/18.png)
+
+---
+## 📑 Содержание
+
+- [🛠 Стек технологий](#-стек-технологий)
+- [🔗 Полезные ссылки](#🔗-полезные-ссылки)
+- [📁 Структура проекта](#-структура-проекта)
+- [🧩 Реализованные тесты](#-реализованные-тесты)
+  - [🛒 Cart (test_cart.py)](#-cart-test_cartpy)
+  - [🖱 Home / Categories (test_home.py)](#-home--categories-test_homepy)
+  - [⚖ Comparison (test_comparison.py)](#-comparison-test_comparisonpy)
+  - [🔍 Search (test_search.py)](#-search-test_searchpy)
+  - [🔢 Sorting (test_sorting.py)](#-sorting-test_sortingpy)
+- [▶️ Запуск](#▶️-запуск)
+  - [Установка зависимостей](#установка-зависимостей)
+  - [Запуск тестов](#запуск-тестов)
+  - [Запуск с генерацией Allure-результатов](#запуск-с-генерацией-allure-результатов)
+- [🖥 Запуск в Selenoid](#🖥-запуск-в-selenoid)
+- [⚙️ CI/CD в Jenkins](#⚙️-cicd-в-jenkins)
+  - [Артефакты Jenkins (скриншоты)](#артефакты-jenkins-скриншоты)
+- [📊 Allure Report](#📊-allure-report)
+  - [Разделы отчёта (скриншоты)](#разделы-отчёта-скриншоты)
+- [🧭 Интеграция с Allure TestOps](#🧭-интеграция-с-allure-testops)
+- [📬 Telegram-уведомления](#📬-telegram-уведомления)
+  - [Пример уведомления (скриншот)](#пример-уведомления-скриншот)
+
+
+
+
+---
+## 🛠 Стек технологий
+
+| Технология | Описание |
+|-----------|----------|
+| ![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python&logoColor=white)| язык разработки |
+| ![Pytest](https://img.shields.io/badge/Pytest-9.0.2-orange?logo=pytest&logoColor=white) | тестовый фреймворк |
+| ![Selene](https://img.shields.io/badge/Selene-2.0.0rc9-lightgrey) | обёртка над Selenium |
+| ![Selenium](https://img.shields.io/badge/Selenium-4.39.0-lightblue?logo=selenium&logoColor=white) | драйвер для автоматизации браузера |
+| ![Allure](https://img.shields.io/badge/Allure-2.15.3-pink) | отчёты о тестировании |
+| ![Allure TestOps](https://img.shields.io/badge/Allure_TestOps-2.15.3-purple) | управление тестами |
+| ![Selenoid](https://img.shields.io/badge/Selenoid-✓-green) | удалённый запуск браузеров |
+| ![Jenkins](https://img.shields.io/badge/Jenkins-CI-red?logo=jenkins&logoColor=white)| CI/CD |
+| ![Telegram Bot API](https://img.shields.io/badge/Telegram-Bot-blue?logo=telegram&logoColor=white) | уведомления о сборках |
+
+---
+
+## 🔗 Полезные ссылки
+
+| Ресурс | Ссылка |
+|--------|--------|
+| GitHub репозиторий | [homework_14](https://github.com/Elina-Mazitova/homework_14) |
+| Jenkins job | [Elina-Mazitova_homework_14](https://jenkins.autotests.cloud/job/Elina-Mazitova_homework_14/) |
+| Allure TestOps | [Suites](https://allure.autotests.cloud/project/5071/test-cases?treeId=9913) |
+
+
+---
+
+## 📁 Структура проекта
+
+```text
+homework_14/
+├── tests/
+│   ├── test_login.py
+│   ├── test_registration.py
+│   ├── test_cart.py
+│   ├── test_search.py
+│   └── test_profile.py
+│
+├── pages/
+│   ├── login_page.py
+│   ├── registration_page.py
+│   ├── cart_page.py
+│   ├── search_page.py
+│   └── profile_page.py
+│
+├── conftest.py
+├── pytest.ini
+├── requirements.txt
+└── README.md
+```
+
+
+---
+
+## 🧩 Реализованные тесты
+
+### 🛒 Cart (test_cart.py)
+**Цель:** Проверка добавления товара в корзину.
+
+### 🖱 Home / Categories (test_home.py)
+**Цель:** Проверка открытия категории товаров.
+
+### ⚖ Comparison (test_comparison.py)
+**Цель:** Проверка добавления товара в список сравнения.
+
+### 🔍 Search (test_search.py)
+**Цель:** Проверка поиска товара.
+
+### 🔢 Sorting (test_sorting.py)
+**Цель:** Проверка сортировки товаров по цене (от высокой к низкой).
+
+---
+
+## ▶️ Запуск
+
+### Установка зависимостей
+```bash
+pip install -r requirements.txt
+```
+Запуск тестов
+```bash
+pytest
+```
+Запуск с генерацией Allure-результатов
+```bash
+pytest --alluredir=allure-results
+```
+## 🖥 Запуск в Selenoid
+Основные настройки указаны в conftest.py:
+```bash
+browserName: chrome
+enableVNC: true
+enableVideo: true
+```
+Видео и скриншоты автоматически прикрепляются к отчёту Allure.
+
+## ⚙️ CI/CD в Jenkins
+Jenkins job выполняет следующие шаги:
+
+1. Клонирование репозитория  
+2. Установка зависимостей  
+3. Запуск UI-тестов в **Selenoid**  
+4. Генерация **Allure Report**  
+5. Отправка результатов в **Allure TestOps**  
+6. Отправка уведомления в **Telegram**  
+
+### Артефакты Jenkins (скриншоты)
+
+- Конфигурация job
+  
+    Шаг 1
+![Step1](images/01.jpg)
+
+    Шаг 2
+![Step1](images/02.jpg)
+
+    Шаг 3
+  
+  `${JOB_NAME} - #${BUILD_NUMBER}`
+![Step1](images/03.jpg)
+
+  Шаг 4
+  
+  `export  SELENOID_LOGIN='user1'
+export  SELENOID_PASS='1234'
+export  SELENOID_URL='selenoid.autotests.cloud'`
+
+  `{
+  "base": {
+    "logo": "",
+    "project": "${JOB_NAME}",
+    "environment": "ga.guru",
+    "comment": "no.comment",
+    "reportLink": "${BUILD_URL}",
+    "language": "en",
+    "allureFolder": "allure-report",
+    "enableChart": true
+  },
+  "telegram": {
+    "token": "7967566351:AAF_APQuWWTQWleO6ZFZxOeuJDr6D434VnU",
+    "chat": "-1002900061620",
+    "replyTo": ""
+   }
+}`
+
+  ![Step1](images/04.jpg)
+
+  Шаг 5
+  `python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+pytest .`
+
+  ![Step1](images/05.jpg)
+
+  Шаг 6
+  ![Step1](images/06.jpg)
+
+  Шаг 7
+
+  `cd ..
+FILE=allure-notifications-4.6.1.jar
+if [ ! -f "$FILE" ]; then
+   wget https://github.com/qa-guru/allure-notifications/releases/download/4.6.1/allure-notifications-4.6.1.jar
+fi`
+
+  ![Step1](images/07.jpg)
+
+    Шаг 8
+    
+  `java "-DconfigFile=notifications/config.json" -jar ../allure-notifications-4.6.1.jar`
+  ![Step1](images/08.jpg)
+
+
+- История запусков
+  ![История запусков](images/09.png)
+
+
+## 📊 Allure Report
+
+Отчёт Allure содержит:
+
+- пошаговое выполнение тестов  
+- скриншоты  
+- HTML-снимки DOM  
+- видео прохождения тестов  
+- логи браузера  
+
+### Разделы отчёта (скриншоты)
+
+### 📊 Allure Report
+
+- Overview
+![Overview](images/10.png)
+
+- Suites
+![Suites](images/12.png)
+
+
+- Attachments
+![Attachments](images/13.png)
+
+- Video  
+  ![Allure Test Video](images/8a416d280b5ab1b73c192a486ff595fe-ezgif.com-video-to-gif-converter.gif)
+  
+## 🧭 Интеграция с Allure TestOps
+
+В рамках проекта настроено:
+- Проект в Allure TestOps
+![Проект в Allure TestOps](images/14.png)
+
+- Загрузка результатов тестов из Jenkins
+![Загрузка из Jenkins](images/15.png)
+
+- Аналитика и история запусков
+![Аналитика и история запусков](images/16.png)
+
+---
+## 📬 Telegram-уведомления
+
+После завершения сборки Jenkins отправляет уведомление в Telegram, содержащее:
+
+- окружение сборки  
+- количество выполненных и пройденных тестов  
+- ссылку на **Allure Report**  
+
+### Пример уведомления (скриншот)
+
+- Telegram message  
+  ![Telegram message](images/17.png)

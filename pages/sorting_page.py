@@ -1,15 +1,13 @@
 import allure
 from selene import browser, be
 from selenium.webdriver.support.ui import Select
-from pages.base_page import BasePage
 
 
-
-class SortingPage(BasePage):
+class SortingPage:
 
     @allure.step("Открываем страницу категории с path={path}")
     def open_category(self, path: str):
-        self.open(f"/index.php?route=product/category&path={path}")
+        browser.open(f"/index.php?route=product/category&path={path}")
         return self
 
     @allure.step("Выбираем сортировку: {option_text}")

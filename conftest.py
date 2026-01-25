@@ -38,7 +38,7 @@ def setup_browser():
     # ==== Данные для Selenoid из .env ====
     selenoid_user = os.getenv("SELENOID_USER")
     selenoid_password = os.getenv("SELENOID_PASSWORD")
-    selenoid_host = os.getenv("SELENOID_HOST", "selenoid.autotests.cloud/wd/hub")
+    selenoid_host = os.getenv("SELENOID_HOST", "selenoid.autotests.cloud")
 
     # ==== ClientConfig вместо user:pass@url ====
     client_config = ClientConfig(

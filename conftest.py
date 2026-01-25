@@ -1,66 +1,76 @@
 import os
 import pytest
-import allure
-from allure_commons.types import AttachmentType
+from dotenv import load_dotenv
+from selene import browser
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selene import browser
-from dotenv import load_dotenv
+from selenium.webdriver.remote.remote_connection import RemoteConnection, ClientConfig
+
+from utils.attachments import (
+    attach_screenshot,
+    attach_page_source,
+    attach_browser_logs,
+    attach_video
+)
 
 load_dotenv()
 
 
-@pytest.fixture(scope='function', autouse=True)
+@pytest.fixture(scope="function", autouse=True)
 def setup_browser():
+    # ==== Браузер и версия из .env ====
+    browser_name = os.getenv("BROWSER_NAME", "chrome")
+    browser_version = os.getenv("BROWSER_VERSION", "128.0")
+
     options = Options()
-    options.set_capability("browserName", "chrome")
-    options.set_capability("browserVersion", "128.0")
+    options.set_capability("browserName", browser_name)
+    options.set_capability("browserVersion", browser_version)
+
+    # ==== Настройки Selenoid ====
     options.set_capability("selenoid:options", {
         "enableVNC": True,
         "enableVideo": True
     })
-    # включаем логи браузера
+
+    # ==== Логи браузера ====
     options.set_capability("goog:loggingPrefs", {"browser": "ALL"})
 
-    remote_url = os.getenv("REMOTE_URL", "https://user1:1234@selenoid.autotests.cloud/wd/hub")
+    # ==== Данные для Selenoid из .env ====
+    selenoid_user = os.getenv("SELENOID_USER")
+    selenoid_password = os.getenv("SELENOID_PASSWORD")
+    selenoid_host = os.getenv("SELENOID_HOST", "selenoid.autotests.cloud/wd/hub")
 
+    # ==== ClientConfig вместо user:pass@url ====
+    client_config = ClientConfig(
+        remote_server_addr=f"https://{selenoid_host}",
+        username=selenoid_user,
+        password=selenoid_password
+    )
+
+    remote_connection = RemoteConnection(
+        None,  # URL уже передан в client_config
+        client_config=client_config
+    )
     driver = webdriver.Remote(
-        command_executor=remote_url,
+        command_executor=remote_connection,
         options=options
     )
 
-    # 📌 Настраиваем глобальный selene.browser
+    # ==== Selene ====
     browser.config.driver = driver
-    browser.config.base_url = os.getenv("BASE_URL", "https://ecommerce-playground.lambdatest.io")
+    browser.config.base_url = os.getenv(
+        "BASE_URL",
+        "https://ecommerce-playground.lambdatest.io"
+    )
     browser.config.window_width = 1920
     browser.config.window_height = 1080
 
     yield browser
 
-    # 📌 Артефакты всегда
-    try:
-        allure.attach(driver.get_screenshot_as_png(),
-                      name="screenshot",
-                      attachment_type=AttachmentType.PNG)
-        allure.attach(driver.page_source,
-                      name="page_source",
-                      attachment_type=AttachmentType.HTML)
-    except Exception:
-        pass
-
-    try:
-        logs = driver.get_log("browser")
-        text = "\n".join([f"{l['level']}: {l['message']}" for l in logs])
-        allure.attach(text, "browser_logs", AttachmentType.TEXT, ".log")
-    except Exception:
-        pass
-
-    video_url = f"https://selenoid.autotests.cloud/video/{driver.session_id}.mp4"
-    allure.attach(
-        f"<html><body><video width='100%' height='100%' controls autoplay>"
-        f"<source src='{video_url}' type='video/mp4'></video></body></html>",
-        name="video",
-        attachment_type=AttachmentType.HTML
-    )
+    # ==== Аттачи ====
+    attach_screenshot(driver)
+    attach_page_source(driver)
+    attach_browser_logs(driver)
+    attach_video(driver)
 
     driver.quit()

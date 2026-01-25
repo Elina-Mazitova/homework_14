@@ -111,7 +111,7 @@ Jenkins job выполняет следующие шаги:
 
 ### 📊 Allure Report
 
-- [Аллюр отчет](https://jenkins.autotests.cloud/job/Elina-Mazitova_homework_14/9/allure/)
+- [Аллюр отчет](https://jenkins.autotests.cloud/job/Elina-Mazitova_homework_14/21/allure/)
 
 - Overview
 ![Overview](images/10.png)

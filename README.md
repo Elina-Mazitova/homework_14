@@ -48,44 +48,6 @@
 
 ---
 
-## 🔗 Полезные ссылки
-
-| Ресурс | Ссылка |
-|--------|--------|
-| GitHub репозиторий | [homework_14](https://github.com/Elina-Mazitova/homework_14) |
-| Jenkins job | [Elina-Mazitova_homework_14](https://jenkins.autotests.cloud/job/Elina-Mazitova_homework_14/) |
-| Allure TestOps | [Suites](https://allure.autotests.cloud/project/5071/test-cases?treeId=9913) |
-
-
----
-
-## 📁 Структура проекта
-
-```text
-homework_14/
-├── tests/
-│   ├── test_login.py
-│   ├── test_registration.py
-│   ├── test_cart.py
-│   ├── test_search.py
-│   └── test_profile.py
-│
-├── pages/
-│   ├── login_page.py
-│   ├── registration_page.py
-│   ├── cart_page.py
-│   ├── search_page.py
-│   └── profile_page.py
-│
-├── conftest.py
-├── pytest.ini
-├── requirements.txt
-└── README.md
-```
-
-
----
-
 ## 🧩 Реализованные тесты
 
 ### 🛒 Cart (test_cart.py)
@@ -137,79 +99,6 @@ Jenkins job выполняет следующие шаги:
 4. Генерация **Allure Report**  
 5. Отправка результатов в **Allure TestOps**  
 6. Отправка уведомления в **Telegram**  
-
-### Артефакты Jenkins (скриншоты)
-
-- Конфигурация job
-  
-    Шаг 1
-![Step1](images/01.jpg)
-
-    Шаг 2
-![Step1](images/02.jpg)
-
-    Шаг 3
-  
-  `${JOB_NAME} - #${BUILD_NUMBER}`
-![Step1](images/03.jpg)
-
-  Шаг 4
-  
-  `export  SELENOID_LOGIN='user1'
-export  SELENOID_PASS='1234'
-export  SELENOID_URL='selenoid.autotests.cloud'`
-
-  `{
-  "base": {
-    "logo": "",
-    "project": "${JOB_NAME}",
-    "environment": "ga.guru",
-    "comment": "no.comment",
-    "reportLink": "${BUILD_URL}",
-    "language": "en",
-    "allureFolder": "allure-report",
-    "enableChart": true
-  },
-  "telegram": {
-    "token": "your_token",
-    "chat": "your_chat",
-    "replyTo": ""
-   }
-}`
-
-  ![Step1](images/19.png)
-  ![Step1](images/20.png)
-
-  Шаг 5
-  `python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-pytest .`
-
-  ![Step1](images/05.jpg)
-
-  Шаг 6
-  ![Step1](images/06.jpg)
-
-  Шаг 7
-
-  `cd ..
-FILE=allure-notifications-4.6.1.jar
-if [ ! -f "$FILE" ]; then
-   wget https://github.com/qa-guru/allure-notifications/releases/download/4.6.1/allure-notifications-4.6.1.jar
-fi`
-
-  ![Step1](images/07.jpg)
-
-    Шаг 8
-    
-  `java "-DconfigFile=notifications/config.json" -jar ../allure-notifications-4.6.1.jar`
-  ![Step1](images/08.jpg)
-
-
-- История запусков
-  ![История запусков](images/09.png)
-
 
 ## 📊 Allure Report
 

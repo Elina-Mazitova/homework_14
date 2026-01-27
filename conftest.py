@@ -9,7 +9,7 @@ from selenium.webdriver.remote.remote_connection import RemoteConnection, Client
 from utils.attachments import (
     attach_screenshot,
     attach_page_source,
-    attach_browser_logs,
+    add_logs,
     attach_video
 )
 
@@ -70,7 +70,7 @@ def setup_browser():
     # ==== Аттачи ====
     attach_screenshot(driver)
     attach_page_source(driver)
-    attach_browser_logs(driver)
+    add_logs(browser)
     attach_video(driver)
 
     driver.quit()

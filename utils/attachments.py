@@ -24,27 +24,9 @@ def attach_page_source(driver):
     except Exception as e:
         allure.attach(str(e), "page_source_error", AttachmentType.TEXT)
 
-
-def attach_browser_logs(driver):
-    """
-    Фикс для логов браузера:
-    - некоторые драйверы возвращают пустой список
-    - некоторые драйверы кидают ошибку, если логов нет
-    - некоторые драйверы возвращают странные структуры
-    """
-    try:
-        logs = driver.get_log("browser")
-        if logs:
-            text = "\n".join(
-                f"{entry.get('level')}: {entry.get('message')}"
-                for entry in logs
-            )
-            allure.attach(text, "browser_logs", AttachmentType.TEXT)
-        else:
-            allure.attach("No browser logs", "browser_logs", AttachmentType.TEXT)
-    except Exception as e:
-        allure.attach(str(e), "browser_logs_error", AttachmentType.TEXT)
-
+def add_logs(browser):
+        log = "".join(f'{text}\n' for text in browser.driver.execute("getLog", {'type': 'browser'})['value'])
+        allure.attach(log, 'browser_logs', AttachmentType.TEXT, '.log')
 
 def attach_video(driver):
     session_id = driver.session_id

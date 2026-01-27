@@ -28,10 +28,31 @@ def setup_browser():
     options.set_capability("browserVersion", browser_version)
 
     # ==== Настройки Selenoid ====
-    options.set_capability("selenoid:options", {
-        "enableVNC": True,
-        "enableVideo": True
-    })
+    selenoid_url = os.getenv("SELENOID_URL")
+
+    if selenoid_url:
+        selenoid_user = os.getenv("SELENOID_USER")
+        selenoid_password = os.getenv("SELENOID_PASSWORD")
+        selenoid_host = os.getenv("SELENOID_HOST", "selenoid.autotests.cloud")
+
+        client_config = ClientConfig(
+            remote_server_addr=f"https://{selenoid_host}",
+            username=selenoid_user,
+            password=selenoid_password
+        )
+
+        remote_connection = RemoteConnection(
+            None,
+            client_config=client_config
+        )
+
+        driver = webdriver.Remote(
+            command_executor=remote_connection,
+            options=options
+        )
+
+    else:
+        driver = webdriver.Chrome()
 
     # ==== Логи браузера ====
     options.set_capability("goog:loggingPrefs", {"browser": "ALL"})

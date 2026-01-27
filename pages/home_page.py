@@ -23,7 +23,5 @@ class HomePage:
 
     @allure.step("Открыть iPhone из результатов поиска")
     def open_iphone_from_results(self):
-        browser.element(
-            '#mz-product-grid-image-40-212469 img'
-        ).should(be.visible).click()
+        browser.element('img[alt="iPhone"]').should(be.visible).click()
         return self

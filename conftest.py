@@ -6,6 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.remote.remote_connection import RemoteConnection, ClientConfig
 
+from pages.cart_page import CartPage
 from utils.attachments import (
     attach_screenshot,
     attach_page_source,
@@ -74,3 +75,9 @@ def setup_browser():
     attach_video(driver)
 
     driver.quit()
+
+@pytest.fixture
+def cart_cleaner():
+    cart = CartPage()
+    cart.clear()
+    return cart
